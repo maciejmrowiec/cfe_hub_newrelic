@@ -77,9 +77,12 @@ func main() {
 	component.AddMetrica(NewAverageBenchmark("host/agent/avg_execution_update.cf", 300, db, "CFEngine Execution (policy filename: '/var/cfengine/inputs/update.cf')"))
 	component.AddMetrica(NewAverageBenchmark("host/agent/avg_execution_promises.cf", 300, db, "CFEngine Execution (policy filename: '/var/cfengine/inputs/promises.cf')"))
 
+	// Lasteen incomming vs outgoing
+	component.AddMetrica(NewConnectionEstablished("network/connections/count/incoming", db, "INCOMING", 300))
+	component.AddMetrica(NewConnectionEstablished("network/connections/count/outgoing", db, "OUTGOING", 300))
+
 	// TODO black hosts
 	// TODO estimated max hub capacity for cf-hub and cf-consumer
-	// TODO lasteen incomming vs outgoing
 
 	// Host count
 	component.AddMetrica(NewHostCount("host/count", db))

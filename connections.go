@@ -44,3 +44,44 @@ func (c *ConnectionErrorCount) GetValue() (float64, error) {
 
 	return float64(value.Int64), nil
 }
+
+type ConnectionEstablished struct {
+	db       *sql.DB
+	path     string
+	name     string
+	interval int
+}
+
+func NewConnectionEstablished(path string, db *sql.DB, name string, interval int) *ConnectionEstablished {
+	return &ConnectionEstablished{
+		db:       db,
+		path:     path,
+		name:     name,
+		interval: interval,
+	}
+}
+
+func (c *ConnectionEstablished) GetUnits() string {
+	return "Count"
+}
+
+func (c *ConnectionEstablished) GetName() string {
+	return c.path
+}
+
+func (c *ConnectionEstablished) GetValue() (float64, error) {
+	query := fmt.Sprintf(`
+		SELECT count(*) 
+		FROM __lastseenhosts 
+		WHERE hostkey = (select hostkey from __contexts where contextname = 'hub') 
+		AND lastseendirection = '%s' 
+		AND lastseentimestamp > NOW() - INTERVAL '%d Seconds'
+		`, c.name, c.interval+300) // +300 as it looks at 5min old data upfront
+
+	var value sql.NullInt64
+	if err := c.db.QueryRow(query).Scan(&value); err != nil {
+		return 0, err
+	}
+
+	return float64(value.Int64), nil
+}
