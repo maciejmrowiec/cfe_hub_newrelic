@@ -54,7 +54,7 @@ func NewAverageBenchmark(path string, interval int, db *sql.DB, name string) *Av
 }
 
 func (a *AverageBenchmark) GetUnits() string {
-	return "ms"
+	return "s"
 }
 
 func (a *AverageBenchmark) GetName() string {
@@ -66,12 +66,12 @@ func (a *AverageBenchmark) GetValue() (float64, error) {
 		SELECT avg(averagevalue)
 		FROM __benchmarkslog
 		WHERE checktimestamp > NOW() - INTERVAL '%d Seconds'
-		AND eventname  = '%s'`, a.interval, a.name)
+		AND eventname  = $1`, a.interval)
 
-	var value sql.NullInt64
-	if err := a.db.QueryRow(query).Scan(&value); err != nil {
+	var value sql.NullFloat64
+	if err := a.db.QueryRow(query, a.name).Scan(&value); err != nil {
 		return 0, err
 	}
 
-	return float64(value.Int64), nil
+	return value.Float64, nil
 }
