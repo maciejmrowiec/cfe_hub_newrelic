@@ -81,8 +81,9 @@ func main() {
 	component.AddMetrica(NewConnectionEstablished("network/connections/count/incoming", db, "INCOMING", 300))
 	component.AddMetrica(NewConnectionEstablished("network/connections/count/outgoing", db, "OUTGOING", 300))
 
-	// TODO black hosts
-	// TODO estimated max hub capacity for cf-hub and cf-consumer
+	// Estimated max hub capacity for cf-hub and cf-consumer
+	component.AddMetrica(NewEstimatedCapacity("average/capacity/cf-hub", db, "hub", 300))
+	component.AddMetrica(NewEstimatedCapacity("average/capacity/cf-consumer", db, "consumer", 300))
 
 	// Host count
 	component.AddMetrica(NewHostCount("host/count", db))
