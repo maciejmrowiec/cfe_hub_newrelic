@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/maciejmrowiec/cfe_hub_newrelic/status.png)](https://drone.io/github.com/maciejmrowiec/cfe_hub_newrelic/latest)
+
 # cfe_hub_newrelic
 New Relic plugin for monitoring CFEngine Hub 
 
