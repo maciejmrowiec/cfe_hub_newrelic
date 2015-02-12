@@ -194,22 +194,16 @@ func (e *EstimatedCapacity) GetUnits() string {
 }
 
 func (e *EstimatedCapacity) getHubEstimation() (float64, error) {
-	var network_avg float64
-	var redis_avg float64
+	var hub_avg float64
 	var err error
 
-	if network_avg, err = e.table_diagnostics.GetSampleLocalAverage("hub_processing_time_per_host", e.interval, ""); err != nil {
-		return 0, err
-	}
-
-	if redis_avg, err = e.table_diagnostics.GetSampleLocalAverage("redis_processing_time_per_host", e.interval, ""); err != nil {
+	if hub_avg, err = e.table_diagnostics.GetSampleLocalAverage("hub_processing_time_per_host", e.interval, ""); err != nil {
 		return 0, err
 	}
 
 	hub_processes := 50.0 // hub uses up to 50 threads
-	total_processing_time := network_avg + redis_avg
 
-	return float64(e.max_time_per_collection_round_ms) / (total_processing_time / hub_processes), nil
+	return float64(e.max_time_per_collection_round_ms) / (hub_avg / hub_processes), nil
 }
 
 func (e *EstimatedCapacity) getConsumerEstimation() (float64, error) {
