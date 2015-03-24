@@ -73,7 +73,7 @@ func (c *ConnectionEstablished) GetValue() (float64, error) {
 	query := fmt.Sprintf(`
 		SELECT count(*) 
 		FROM __lastseenhosts 
-		WHERE hostkey = (select hostkey from __contexts where contextname = 'hub') 
+		WHERE hostkey = (select hostkey from __contexts where contextname = 'policy_server') 
 		AND lastseendirection = '%s' 
 		AND lastseentimestamp > NOW() - INTERVAL '%d Seconds'
 		`, c.name, c.interval+300) // +300 as it looks at 5min old data upfront
