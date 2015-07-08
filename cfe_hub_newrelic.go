@@ -57,12 +57,12 @@ func main() {
 	component.AddMetrica(NewLocalAverageDiagnostics(db, "hub_collection_total_time", "", 300, "byquery"))
 	component.AddMetrica(NewLocalAverageDiagnostics(db, "redis_wait_time_per_host", "", 300, "byquery"))
 
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "duplicate_report", DELTA, 300, "byquery"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "duplicate_report", REBASE, 300, "byquery"))
-
 	// Count deltas and rebases
 	component.AddMetrica(NewLocalCountDiagnostics(db, "consumer_processing_time_per_host", DELTA, 300))
 	component.AddMetrica(NewLocalCountDiagnostics(db, "consumer_processing_time_per_host", REBASE, 300))
+
+	component.AddMetrica(NewLocalCountDiagnostics(db, "duplicate_report", DELTA, 300))
+	component.AddMetrica(NewLocalCountDiagnostics(db, "duplicate_report", REBASE, 300))
 
 	// Pipeline measurements delta + rebase (total average)
 	component.AddMetrica(NewLocalAverageDiagnostics(db, "consumer_processing_time_per_host", "", 300, "pipeline"))
