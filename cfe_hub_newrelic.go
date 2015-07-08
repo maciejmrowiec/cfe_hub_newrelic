@@ -74,6 +74,7 @@ func main() {
 	component.AddMetrica(NewConnectionErrorCount("network/error/count/ServerNoReply", db, "ServerNoReply", 300))
 	component.AddMetrica(NewConnectionErrorCount("network/error/count/ServerAuthenticationError", db, "ServerAuthenticationError", 300))
 	component.AddMetrica(NewConnectionErrorCount("network/error/count/InvalidData", db, "InvalidData", 300))
+	component.AddMetrica(NewConnectionErrorCount("network/error/count/HostKeyMismatch", db, "HostKeyMismatch", 300))
 
 	// Avg agent execution time per promises.cf / update.cf / failsafe.cf
 	component.AddMetrica(NewAverageBenchmark("host/agent/avg_execution_failsafe.cf", 300, db, "CFEngine Execution (policy filename: '/var/cfengine/inputs/failsafe.cf')"))
