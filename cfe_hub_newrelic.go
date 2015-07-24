@@ -36,7 +36,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	component := newrelic_platform_go.NewPluginComponent("hub/"+hostname, "com.github.maciejmrowiec.cfe_hub_newrelic")
+	component := newrelic_platform_go.NewPluginComponent("hub/"+hostname, "com.github.maciejmrowiec.cfe_hub_newrelic", verbose)
 
 	plugin := newrelic_platform_go.NewNewrelicPlugin("0.0.1", newrelic_key, 300)
 	plugin.AddComponent(component)
@@ -122,6 +122,5 @@ func main() {
 	}
 	component.AddMetrica(software_updates_alert)
 
-	plugin.Verbose = verbose
 	plugin.Run()
 }
