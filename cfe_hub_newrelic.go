@@ -81,6 +81,10 @@ func main() {
 	component.AddMetrica(NewAverageBenchmark("host/agent/avg_execution_update.cf", 300, db, "CFEngine Execution (policy filename: '/var/cfengine/inputs/update.cf')"))
 	component.AddMetrica(NewAverageBenchmark("host/agent/avg_execution_promises.cf", 300, db, "CFEngine Execution (policy filename: '/var/cfengine/inputs/promises.cf')"))
 
+	// Maintenance execution policy
+	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_daily", 300, db, "cfe_internal_management_postgresql_vacuum:methods:hub"))
+	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_weekly", 300, db, "cfe_internal_management_postgresql_maintenance:methods:hub"))
+
 	// Lasteen incomming vs outgoing
 	component.AddMetrica(NewConnectionEstablished("network/connections/count/incoming", db, "INCOMING", 300))
 	component.AddMetrica(NewConnectionEstablished("network/connections/count/outgoing", db, "OUTGOING", 300))
