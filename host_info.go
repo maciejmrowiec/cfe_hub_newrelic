@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	_ "github.com/lib/pq"
 )
@@ -71,6 +72,10 @@ func (a *AverageBenchmark) GetValue() (float64, error) {
 	var value sql.NullFloat64
 	if err := a.db.QueryRow(query, a.name).Scan(&value); err != nil {
 		return 0, err
+	}
+
+	if !value.Valid {
+		return 0, errors.New("NullValue")
 	}
 
 	return value.Float64, nil

@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	_ "github.com/lib/pq"
 )
@@ -40,6 +41,10 @@ func (c *ConnectionErrorCount) GetValue() (float64, error) {
 	var value sql.NullInt64
 	if err := c.db.QueryRow(query).Scan(&value); err != nil {
 		return 0, err
+	}
+
+	if !value.Valid {
+		return 0, errors.New("NullReponse")
 	}
 
 	return float64(value.Int64), nil
@@ -81,6 +86,10 @@ func (c *ConnectionEstablished) GetValue() (float64, error) {
 	var value sql.NullInt64
 	if err := c.db.QueryRow(query).Scan(&value); err != nil {
 		return 0, err
+	}
+
+	if !value.Valid {
+		return 0, errors.New("NullReponse")
 	}
 
 	return float64(value.Int64), nil

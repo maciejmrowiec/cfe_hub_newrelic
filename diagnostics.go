@@ -124,6 +124,10 @@ func (d *Diagnostics) GetSampleUnits(observable string) string {
 		return "unknown"
 	}
 
+	if !value.Valid {
+		return "unknown"
+	}
+
 	return value.String
 }
 
@@ -144,6 +148,10 @@ func (d *Diagnostics) GetSampleLocalCount(observable string, interval int, query
 		return 0, err
 	}
 
+	if !value.Valid {
+		return 0, errors.New("NullReponse")
+	}
+
 	return value.Int64, nil
 }
 
@@ -162,6 +170,10 @@ func (d *Diagnostics) GetSampleLocalAverage(observable string, interval int, que
 	var value sql.NullFloat64
 	if err := d.db.QueryRow(query).Scan(&value); err != nil {
 		return 0, err
+	}
+
+	if !value.Valid {
+		return 0, errors.New("NullReponse")
 	}
 
 	return value.Float64, nil
