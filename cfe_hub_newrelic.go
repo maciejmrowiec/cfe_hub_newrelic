@@ -83,6 +83,7 @@ func main() {
 	// Maintenance execution policy
 	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_daily", 300, db, "cfe_internal_management_postgresql_vacuum:methods:hub"))
 	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_weekly", 300, db, "cfe_internal_management_postgresql_maintenance:methods:hub"))
+	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_report_history", 300, db, "cfe_internal_management_report_history:methods:hub"))
 
 	// Lasteen incomming vs outgoing
 	component.AddMetrica(NewConnectionEstablished("network/connections/count/incoming", db, "INCOMING", 300))
