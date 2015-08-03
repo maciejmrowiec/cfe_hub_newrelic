@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	diag "github.com/maciejmrowiec/cfe_hub_newrelic_plugin/diagnostics"
 	platform "github.com/yvasiyarov/newrelic_platform_go"
 )
 
@@ -10,37 +11,37 @@ func InitHubPerformanceStatsComponent(db *sql.DB, hostname string, verbose bool)
 	component := platform.NewPluginComponent(hostname, "com.github.maciejmrowiec.cfe_hub_newrelic", verbose)
 
 	// performane per delta and rebase
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "consumer_processing_time_per_host", DELTA, 300, "byquery"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "consumer_processing_time_per_host", REBASE, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "consumer_processing_time_per_host", diag.DELTA, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "consumer_processing_time_per_host", diag.REBASE, 300, "byquery"))
 
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "hub_processing_time_per_host", DELTA, 300, "byquery"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "hub_processing_time_per_host", REBASE, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "hub_processing_time_per_host", diag.DELTA, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "hub_processing_time_per_host", diag.REBASE, 300, "byquery"))
 
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "recivied_data_size_per_host", DELTA, 300, "byquery"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "recivied_data_size_per_host", REBASE, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "recivied_data_size_per_host", diag.DELTA, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "recivied_data_size_per_host", diag.REBASE, 300, "byquery"))
 
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "redis_processing_time_per_host", DELTA, 300, "byquery"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "redis_processing_time_per_host", REBASE, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "redis_processing_time_per_host", diag.DELTA, 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "redis_processing_time_per_host", diag.REBASE, 300, "byquery"))
 
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "hub_collection_total_time", "", 300, "byquery"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "redis_wait_time_per_host", "", 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "hub_collection_total_time", "", 300, "byquery"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "redis_wait_time_per_host", "", 300, "byquery"))
 
 	// Count deltas and rebases
-	component.AddMetrica(NewLocalCountDiagnostics(db, "consumer_processing_time_per_host", DELTA, 300))
-	component.AddMetrica(NewLocalCountDiagnostics(db, "consumer_processing_time_per_host", REBASE, 300))
+	component.AddMetrica(diag.NewLocalCountDiagnostics(db, "consumer_processing_time_per_host", diag.DELTA, 300))
+	component.AddMetrica(diag.NewLocalCountDiagnostics(db, "consumer_processing_time_per_host", diag.REBASE, 300))
 
-	component.AddMetrica(NewLocalCountDiagnostics(db, "duplicate_report", DELTA, 300))
-	component.AddMetrica(NewLocalCountDiagnostics(db, "duplicate_report", REBASE, 300))
+	component.AddMetrica(diag.NewLocalCountDiagnostics(db, "duplicate_report", diag.DELTA, 300))
+	component.AddMetrica(diag.NewLocalCountDiagnostics(db, "duplicate_report", diag.REBASE, 300))
 
 	// Pipeline measurements delta + rebase (total average)
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "consumer_processing_time_per_host", "", 300, "pipeline"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "hub_processing_time_per_host", "", 300, "pipeline"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "redis_processing_time_per_host", "", 300, "pipeline"))
-	component.AddMetrica(NewLocalAverageDiagnostics(db, "redis_wait_time_per_host", "", 300, "pipeline"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "consumer_processing_time_per_host", "", 300, "pipeline"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "hub_processing_time_per_host", "", 300, "pipeline"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "redis_processing_time_per_host", "", 300, "pipeline"))
+	component.AddMetrica(diag.NewLocalAverageDiagnostics(db, "redis_wait_time_per_host", "", 300, "pipeline"))
 
 	// Estimated max hub capacity for cf-hub and cf-consumer
-	component.AddMetrica(NewEstimatedCapacity("average/capacity/cf-hub", db, "hub", 300))
-	component.AddMetrica(NewEstimatedCapacity("average/capacity/cf-consumer", db, "consumer", 300))
+	component.AddMetrica(diag.NewEstimatedCapacity("average/capacity/cf-hub", db, "hub", 300))
+	component.AddMetrica(diag.NewEstimatedCapacity("average/capacity/cf-consumer", db, "consumer", 300))
 
 	// Host count
 	component.AddMetrica(NewHostCount("host/count", db))
