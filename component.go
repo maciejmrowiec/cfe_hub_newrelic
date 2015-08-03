@@ -94,35 +94,5 @@ func InitAPIStatsComponent(db *sql.DB, hostname string, verbose bool) platform.I
 
 	component := platform.NewPluginComponent(hostname, "com.github.maciejmrowiec.cfe_hub_newrelic", verbose)
 
-	// query api tests
-	// software updates trigger
-	software_updates_trigger := &QueryTiming{
-		api_call: QueryApi{
-			User:     AdminUserName,
-			Password: AdminPassword,
-			BaseUrl:  BaseUrl,
-			Resource: Query{
-				Query: "SELECT count (*) AS failhost FROM (SELECT DISTINCT s_up.hostkey FROM softwareupdates s_up WHERE patchreporttype = 'AVAILABLE') AS c_query",
-			},
-		},
-		name: "software_updates/trigger",
-	}
-	component.AddMetrica(software_updates_trigger)
-
-	// software updates alert page
-	software_updates_alert := &QueryTiming{
-		api_call: QueryApi{
-			User:     AdminUserName,
-			Password: AdminPassword,
-			BaseUrl:  BaseUrl,
-			Resource: Query{
-				Query:           `SELECT h.hostkey, h.hostname, count (s.patchname ) AS "c" FROM hosts h INNER JOIN softwareupdates s ON s.hostkey = h.hostkey WHERE patchreporttype = 'AVAILABLE' GROUP BY h.hostkey, h.hostname ORDER BY c DESC`,
-				PaginationLimit: 50,
-			},
-		},
-		name: "software_updates/alert",
-	}
-	component.AddMetrica(software_updates_alert)
-
 	return component
 }

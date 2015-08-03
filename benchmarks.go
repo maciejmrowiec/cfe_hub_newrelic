@@ -7,37 +7,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type HostCount struct {
-	db   *sql.DB
-	path string
-}
-
-func NewHostCount(path string, db *sql.DB) *HostCount {
-	return &HostCount{
-		db:   db,
-		path: path,
-	}
-}
-
-func (h *HostCount) GetUnits() string {
-	return "Count"
-}
-
-func (h *HostCount) GetName() string {
-	return h.path
-}
-
-func (h *HostCount) GetValue() (float64, error) {
-	query := `SELECT count(*) FROM __hosts`
-
-	var value sql.NullInt64
-	if err := h.db.QueryRow(query).Scan(&value); err != nil {
-		return 0, err
-	}
-
-	return float64(value.Int64), nil
-}
-
 type AverageBenchmark struct {
 	db       *sql.DB
 	path     string
@@ -64,10 +33,10 @@ func (a *AverageBenchmark) GetName() string {
 
 func (a *AverageBenchmark) GetValue() (float64, error) {
 	query := fmt.Sprintf(`
-		SELECT avg(averagevalue)
-		FROM __benchmarkslog
-		WHERE checktimestamp > NOW() - INTERVAL '%d Seconds'
-		AND eventname  = $1`, a.interval)
+        SELECT avg(averagevalue)
+        FROM __benchmarkslog
+        WHERE checktimestamp > NOW() - INTERVAL '%d Seconds'
+        AND eventname  = $1`, a.interval)
 
 	var value sql.NullFloat64
 	if err := a.db.QueryRow(query, a.name).Scan(&value); err != nil {

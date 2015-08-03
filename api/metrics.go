@@ -1,8 +1,15 @@
-package main
+package api
 
 type QueryTiming struct {
-	api_call QueryApi
-	name     string
+	apiCall QueryApi
+	name    string
+}
+
+func NewQueryTiming(apiCall QueryApi, name string) *QueryTiming {
+	return &QueryTiming{
+		apiCall: apiCall,
+		name:    name,
+	}
 }
 
 func (l *QueryTiming) GetName() string {
@@ -14,7 +21,7 @@ func (l *QueryTiming) GetUnits() string {
 }
 
 func (l *QueryTiming) GetValue() (float64, error) {
-	duration, err := l.api_call.RequestTest()
+	duration, err := l.apiCall.RequestTest()
 	if err != nil {
 		return 0, err
 	}
