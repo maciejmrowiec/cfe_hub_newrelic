@@ -2,7 +2,7 @@
 *.o
 *.a
 *.so
-cfe_hub_newrelic_plugin
+cfe_hub_newrelic
 
 # Folders
 _obj

@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	diag "github.com/maciejmrowiec/cfe_hub_newrelic_plugin/diagnostics"
+	diag "github.com/maciejmrowiec/cfe_hub_newrelic/diagnostics"
 	platform "github.com/yvasiyarov/newrelic_platform_go"
 	"io/ioutil"
 	"log"
