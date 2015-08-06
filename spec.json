@@ -10,27 +10,27 @@
     "uri": "http://localhost/api/settings"
   },
   {
-    "name": "hosts_all",
+    "name": "hosts/all",
     "method": "GET",
     "uri": "http://localhost/api/host"
   },
   {
-    "name": "hosts_context",
+    "name": "hosts/context",
     "method": "GET",
     "uri": "http://localhost/api/host?context-include=linux"
   },
   {
-    "name": "hosts_context_wildcard",
+    "name": "hosts/context_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/host?context-include=cf.*"
   },
   {
-    "name": "hosts_context_regex",
+    "name": "hosts/context_regex",
     "method": "GET",
     "uri": "http://localhost/api/host?context-include=.*fengin.*"
   },
   {
-    "name": "software_updates_trigger",
+    "name": "sql/software_updates_trigger",
     "method": "POST",
     "uri": "http://localhost/api/query",
     "payload": {
@@ -38,7 +38,7 @@
     }
   },
   {
-    "name": "software_updates_report",
+    "name": "sql/software_updates_report",
     "method": "POST",
     "uri": "http://localhost/api/query",
     "payload": {
@@ -47,73 +47,148 @@
     }
   },
   {
-    "name": "changecount_all",
+    "name": "changes/count/all",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count"
   },
   {
-    "name": "changecount_nodegroup",
+    "name": "changes/count/nodegroup",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?nodegroup=linux"
   },
   {
-    "name": "changecount_nodegroup_regex",
+    "name": "changes/count/nodegroup_regex",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?nodegroup=.*nux"
   },
   {
-    "name": "changecount_promisetype",
+    "name": "changes/count/promisetype",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?promisetype=commands"
   },
   {
-    "name": "changecount_bundle_wildcard",
+    "name": "changes/count/bundle_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?bundlename=cfe_%"
   },
   {
-    "name": "changecount_promisees",
+    "name": "changes/count/promisees",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?promisees=hub"
   },
   {
-    "name": "changecount_logmessages_wildcard",
+    "name": "changes/count/logmessages_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?logmessages=Completed execution of%"
   },
   {
-    "name": "change_all",
+    "name": "changes/list/all",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy"
   },
   {
-    "name": "change_nodegroup",
+    "name": "changes/list/nodegroup",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?nodegroup=linux"
   },
   {
-    "name": "change_nodegroup_regex",
+    "name": "changes/list/nodegroup_regex",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?nodegroup=.*nux"
   },
   {
-    "name": "change_promisetype",
+    "name": "changes/list/promisetype",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?promisetype=contexts"
   },
   {
-    "name": "change_bundle_wildcard",
+    "name": "changes/list/bundle_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?bundlename=cfe_%"
   },
   {
-    "name": "change_promisees",
+    "name": "changes/list/promisees",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?promisees=hub"
   },
   {
-    "name": "change_logmessages_wildcard",
+    "name": "changes/list/logmessages_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?logmessages=Completed execution of%"
+  },
+  {
+    "name": "2.2/hosts/all",
+    "method": "GET",
+    "uri": "http://localhost/rest/host"
+  },
+  {
+    "name": "2.2/hosts/context",
+    "method": "GET",
+    "uri": "http://localhost/rest/host?context=linux"
+  },
+  {
+    "name": "2.2/contexts/all",
+    "method": "GET",
+    "uri": "http://localhost/rest/context"
+  },
+  {
+    "name": "2.2/contexts/name",
+    "method": "GET",
+    "uri": "http://localhost/rest/context?name=linux"
+  },
+  {
+    "name": "2.2/software/all",
+    "method": "GET",
+    "uri": "http://localhost/rest/software"
+  },
+  {
+    "name": "2.2/software/name",
+    "method": "GET",
+    "uri": "http://localhost/rest/software?name=MAKEDEV"
+  },
+  {
+    "name": "2.2/software/version",
+    "method": "GET",
+    "uri": "http://localhost/rest/software?version=3.24-6.el6"
+  },
+  {
+    "name": "2.2/software/arch",
+    "method": "GET",
+    "uri": "http://localhost/rest/software?arch=x86_64"
+  },
+  {
+    "name": "2.2/variable/all",
+    "method": "GET",
+    "uri": "http://localhost/rest/variable"
+  },
+  {
+    "name": "2.2/variable/scope",
+    "method": "GET",
+    "uri": "http://localhost/rest/variable?scope=sys"
+  },
+  {
+    "name": "2.2/variable/name",
+    "method": "GET",
+    "uri": "http://localhost/rest/variable?name=uptime"
+  },
+  {
+    "name": "2.2/variable/type",
+    "method": "GET",
+    "uri": "http://localhost/rest/variable?type=slist"
+  },
+  {
+    "name": "2.2/variable/value",
+    "method": "GET",
+    "uri": "http://localhost/rest/variable?value=x86_64"
+  },
+  {
+    "name": "2.2/promise/repaired/summary/all",
+    "method": "GET",
+    "uri": "http://localhost/rest/promise/log/repaired/summary"
+  },
+  {
+    "name": "2.2/promise/repaired/summary/cause_regex",
+    "method": "GET",
+    "uri": "http://localhost/rest/promise/log/repaired/summary?cause=Updated.*"
   }
 ]
