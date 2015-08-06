@@ -1,0 +1,104 @@
+[
+  {
+    "name": "status",
+    "method": "GET",
+    "uri": "http://localhost/api/"
+  },
+  {
+    "name": "settings",
+    "method": "GET",
+    "uri": "http://localhost/api/settings"
+  },
+  {
+    "name": "hosts_all",
+    "method": "GET",
+    "uri": "http://localhost/api/host"
+  },
+  {
+    "name": "hosts_context",
+    "method": "GET",
+    "uri": "http://localhost/api/host?context-include=linux"
+  },
+  {
+    "name": "hosts_context_regex",
+    "method": "GET",
+    "uri": "http://localhost/api/host?context-include=cf.*"
+  },
+  {
+    "name": "software_updates_trigger",
+    "method": "POST",
+    "uri": "http://localhost/api/query",
+    "payload": {
+      "query": "SELECT count (*) AS failhost FROM (SELECT DISTINCT s_up.hostkey FROM softwareupdates s_up WHERE patchreporttype = 'AVAILABLE') AS c_query"
+    }
+  },
+  {
+    "name": "software_updates_report",
+    "method": "POST",
+    "uri": "http://localhost/api/query",
+    "payload": {
+      "query": "SELECT h.hostkey, h.hostname, count (s.patchname ) FROM hosts h INNER JOIN softwareupdates s ON s.hostkey = h.hostkey WHERE patchreporttype = 'AVAILABLE' GROUP BY h.hostkey, h.hostname ORDER BY count DESC",
+      "limit": 50
+    }
+  },
+  {
+    "name": "changecount_all",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy/count"
+  },
+  {
+    "name": "changecount_nodegroup",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy/count?nodegroup=linux"
+  },
+  {
+    "name": "changecount_promisetype",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy/count?promisetype=commands"
+  },
+  {
+    "name": "changecount_bundle_wildcard",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy/count?bundlename=cfe_%"
+  },
+  {
+    "name": "changecount_promisees",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy/count?promisees=hub"
+  },
+  {
+    "name": "changecount_logmessages_regex",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy/count?logmessages=Completed execution of%"
+  },
+  {
+    "name": "change_all",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy"
+  },
+  {
+    "name": "change_nodegroup",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy?nodegroup=linux"
+  },
+  {
+    "name": "change_promisetype",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy?promisetype=contexts"
+  },
+  {
+    "name": "change_bundle_wildcard",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy?bundlename=cfe_%"
+  },
+  {
+    "name": "change_promisees",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy?promisees=hub"
+  },
+  {
+    "name": "change_logmessages_regex",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy?logmessages=Completed execution of%"
+  }
+]
