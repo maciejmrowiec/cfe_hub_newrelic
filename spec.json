@@ -20,9 +20,14 @@
     "uri": "http://localhost/api/host?context-include=linux"
   },
   {
-    "name": "hosts_context_regex",
+    "name": "hosts_context_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/host?context-include=cf.*"
+  },
+  {
+    "name": "hosts_context_regex",
+    "method": "GET",
+    "uri": "http://localhost/api/host?context-include=.*fengin.*"
   },
   {
     "name": "software_updates_trigger",
