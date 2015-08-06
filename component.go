@@ -2,8 +2,11 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	diag "github.com/maciejmrowiec/cfe_hub_newrelic_plugin/diagnostics"
 	platform "github.com/yvasiyarov/newrelic_platform_go"
+	"io/ioutil"
+	"log"
 )
 
 func InitHubPerformanceStatsComponent(db *sql.DB, hostname string, verbose bool) platform.IComponent {
@@ -83,16 +86,31 @@ func InitMaintenanceStatsComponent(db *sql.DB, hostname string, verbose bool) pl
 	component := platform.NewPluginComponent(hostname, "com.github.maciejmrowiec.cfe_hub_newrelic", verbose)
 
 	// Maintenance execution policy
-	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_daily", 300, db, "cfe_internal_management_postgresql_vacuum:methods:hub"))
-	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_weekly", 300, db, "cfe_internal_management_postgresql_maintenance:methods:hub"))
-	component.AddMetrica(NewAverageBenchmark("hub/agent/maintenance_report_history", 300, db, "cfe_internal_management_report_history:methods:hub"))
+	component.AddMetrica(NewAverageBenchmark("hub/maintenance/vacuum", 300, db, "cfe_internal_management_postgresql_vacuum:methods:hub"))
+	component.AddMetrica(NewAverageBenchmark("hub/maintenance/vacuum_full", 300, db, "cfe_internal_management_postgresql_maintenance:methods:hub"))
+	component.AddMetrica(NewAverageBenchmark("hub/maintenance/report_cleanups", 300, db, "cfe_internal_management_report_history:methods:hub"))
 
 	return component
 }
 
-func InitAPIStatsComponent(db *sql.DB, hostname string, verbose bool) platform.IComponent {
+func InitAPIStatsComponent(db *sql.DB, hostname string, verbose bool, filename string) platform.IComponent {
 
 	component := platform.NewPluginComponent(hostname, "com.github.maciejmrowiec.cfe_hub_newrelic", verbose)
+
+	data, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return component
+	}
+
+	var list []Request
+	if err := json.Unmarshal(data, &list); err != nil {
+		log.Fatalln(err)
+		return component
+	}
+
+	for _, request := range list {
+		component.AddMetrica(NewApiTiming(request, "api/reponse/", "admin", "admin"))
+	}
 
 	return component
 }

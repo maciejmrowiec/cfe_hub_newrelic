@@ -30,7 +30,11 @@ func main() {
 	plugin.AddComponent(InitNetworkingStatsComponent(db, hostname, config.verbose))
 	plugin.AddComponent(InitClientStatsComponent(db, hostname, config.verbose))
 	plugin.AddComponent(InitMaintenanceStatsComponent(db, hostname, config.verbose))
-	plugin.AddComponent(InitAPIStatsComponent(db, hostname, config.verbose))
+
+	// optional if spec file provided
+	if config.filename != "" {
+		plugin.AddComponent(InitAPIStatsComponent(db, hostname, config.verbose, config.filename))
+	}
 
 	plugin.Verbose = config.verbose
 	plugin.Run()
