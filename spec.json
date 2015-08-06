@@ -57,6 +57,11 @@
     "uri": "http://localhost/api/v2/changes/policy/count?nodegroup=linux"
   },
   {
+    "name": "changecount_nodegroup_regex",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy/count?nodegroup=.*nux"
+  },
+  {
     "name": "changecount_promisetype",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?promisetype=commands"
@@ -85,6 +90,11 @@
     "name": "change_nodegroup",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?nodegroup=linux"
+  },
+  {
+    "name": "change_nodegroup_regex",
+    "method": "GET",
+    "uri": "http://localhost/api/v2/changes/policy?nodegroup=.*nux"
   },
   {
     "name": "change_promisetype",
