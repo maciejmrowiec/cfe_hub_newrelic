@@ -67,7 +67,7 @@
     "uri": "http://localhost/api/v2/changes/policy/count?promisees=hub"
   },
   {
-    "name": "changecount_logmessages_regex",
+    "name": "changecount_logmessages_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy/count?logmessages=Completed execution of%"
   },
@@ -97,7 +97,7 @@
     "uri": "http://localhost/api/v2/changes/policy?promisees=hub"
   },
   {
-    "name": "change_logmessages_regex",
+    "name": "change_logmessages_wildcard",
     "method": "GET",
     "uri": "http://localhost/api/v2/changes/policy?logmessages=Completed execution of%"
   }
