@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -52,9 +51,6 @@ func (a *ApiTiming) GetValue() (diff float64, err error) {
 	}
 
 	defer resp.Body.Close()
-
-	b, _ := ioutil.ReadAll(resp.Body)
-	fmt.Printf(string(b))
 
 	if resp.StatusCode != a.request.SuccessHttpCode() {
 		body, _ := ioutil.ReadAll(resp.Body)
