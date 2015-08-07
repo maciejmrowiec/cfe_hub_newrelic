@@ -86,8 +86,8 @@ func InitMaintenanceStatsComponent(db *sql.DB, hostname string, verbose bool) pl
 	component := platform.NewPluginComponent(hostname, "com.github.maciejmrowiec.cfe_hub_newrelic", verbose)
 
 	// Maintenance execution policy
-	component.AddMetrica(NewAverageBenchmark("hub/maintenance/vacuum", 300, db, "cfe_internal_management_postgresql_vacuum:methods:hub"))
-	component.AddMetrica(NewAverageBenchmark("hub/maintenance/vacuum_full", 300, db, "cfe_internal_management_postgresql_maintenance:methods:hub"))
+	component.AddMetrica(NewAverageBenchmark("hub/maintenance/vacuum", 600, db, "cfe_internal_management_postgresql_vacuum:methods:hub"))
+	component.AddMetrica(NewAverageBenchmark("hub/maintenance/vacuum_full", 600, db, "cfe_internal_management_postgresql_maintenance:methods:hub"))
 	component.AddMetrica(NewAverageBenchmark("hub/maintenance/report_cleanups", 300, db, "cfe_internal_management_report_history:methods:hub"))
 
 	return component
